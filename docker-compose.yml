@@ -1,0 +1,11 @@
+services:
+  siga-criacional:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: siga-criacional
+    # network_mode: none
+    volumes:
+      - ./src:/app/src
+    command: >
+      sh -c "javac -d bin src/siga/*.java && java -cp bin siga.Main"
