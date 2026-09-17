@@ -27,20 +27,10 @@ package siga;
  */
 public class AcessoDados {
 
-    // PROBLEMA 1: conexão e comando criados separadamente, sem garantia de coerência.
-    public void conectar(String fornecedor) {
-        Conexao conexao;
-        Comando comando;
-        if (fornecedor.equals("MYSQL")) {
-            conexao = new ConexaoMySQL();
-            comando = new ComandoMySQL();
-        } else {
-            conexao = new ConexaoPostgreSQL();
-            comando = new ComandoPostgreSQL();
-        }
-        // Nada impede o engano abaixo (fornecedores misturados):
-        //   conexao = new ConexaoMySQL();
-        //   comando = new ComandoPostgreSQL();  // <- incoerência não detectada!
+    // ETAPA 2 RESOLVIDA: criação da família coerente via Abstract Factory.
+    public void conectar(FabricaBanco fabrica) {
+        Conexao conexao = fabrica.criarConexao();
+        Comando comando = fabrica.criarComando();
         conexao.abrir();
         comando.executar("SELECT * FROM aluno");
     }
